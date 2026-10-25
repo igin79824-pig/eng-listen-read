@@ -3,15 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的網頁專區 | 專案目錄</title>
+  <title>英語聽力與閱讀自主學習專區</title>
   <style>
     :root {
-      --primary-color: #2563eb;
-      --bg-color: #f8fafc;
+      --primary: #2563eb;
+      --primary-light: #eff6ff;
+      --listening-tag: #0284c7;
+      --reading-tag: #16a34a;
+      --bg: #f8fafc;
       --card-bg: #ffffff;
-      --text-main: #1e293b;
-      --text-sub: #64748b;
-      --border-color: #e2e8f0;
+      --text: #1e293b;
+      --sub-text: #64748b;
+      --border: #e2e8f0;
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
       --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
     }
@@ -24,45 +27,82 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      padding: 40px 20px;
-      line-height: 1.5;
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 30px 16px 60px;
+      line-height: 1.6;
     }
 
     .container {
-      max-width: 1000px;
+      max-width: 1040px;
       margin: 0 auto;
     }
 
     header {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
     }
 
     header h1 {
       font-size: 2rem;
-      color: var(--text-main);
+      color: #0f172a;
       margin-bottom: 8px;
     }
 
     header p {
-      color: var(--text-sub);
-      font-size: 1rem;
+      color: var(--sub-text);
+      font-size: 1.05rem;
     }
 
-    /* 卡片格線佈局：桌機三欄、平板兩欄、手機單欄 */
+    /* 分頁切換選單 (Tabs) */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background-color: #fff;
+      border: 1px solid var(--border);
+      padding: 10px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 9999px;
+      cursor: pointer;
+      color: var(--sub-text);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tab-btn:hover {
+      background-color: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .tab-btn.active {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.25);
+    }
+
+    /* 卡片格線 */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
       gap: 20px;
     }
 
     .card {
       background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
       text-decoration: none;
       color: inherit;
       box-shadow: var(--shadow);
@@ -75,50 +115,58 @@
     .card:hover {
       transform: translateY(-4px);
       box-shadow: var(--shadow-hover);
-      border-color: var(--primary-color);
+      border-color: var(--primary);
     }
 
-    .card-tag {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--primary-color);
-      background-color: #eff6ff;
-      padding: 4px 10px;
-      border-radius: 9999px;
+    .badge-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       margin-bottom: 12px;
-      align-self: flex-start;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 6px;
+    }
+
+    .badge-listening {
+      background-color: #e0f2fe;
+      color: var(--listening-tag);
+    }
+
+    .badge-reading {
+      background-color: #dcfce7;
+      color: var(--reading-tag);
     }
 
     .card-title {
       font-size: 1.15rem;
-      font-weight: 600;
+      font-weight: 700;
+      color: var(--text);
       margin-bottom: 8px;
-      color: var(--text-main);
     }
 
     .card-desc {
-      font-size: 0.9rem;
-      color: var(--text-sub);
-      flex-grow: 1;
+      font-size: 0.92rem;
+      color: var(--sub-text);
       margin-bottom: 16px;
+      flex-grow: 1;
     }
 
-    .card-action {
-      font-size: 0.85rem;
+    .card-btn {
+      font-size: 0.88rem;
       font-weight: 600;
-      color: var(--primary-color);
+      color: var(--primary);
       display: flex;
       align-items: center;
+      gap: 4px;
     }
 
-    .card-action::after {
-      content: ' →';
-      transition: transform 0.2s ease;
-    }
-
-    .card:hover .card-action::after {
-      transform: translateX(4px);
+    .card:hover .card-btn {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -126,47 +174,89 @@
 
   <div class="container">
     <header>
-      <h1>學習活動與專案專區</h1>
-      <p>點選下方卡片即可進入各個獨立主題網頁</p>
+      <h1>英語聽讀自主學習專區</h1>
+      <p>請點選分類標籤，挑選今天想要練習的單元開始挑戰！</p>
     </header>
 
-    <!-- 卡片列表區塊 -->
-    <main class="grid">
+    <!-- 分頁切換鈕 -->
+    <nav class="tabs">
+      <button class="tab-btn active" onclick="filterCards('all', this)">全部練習 (4)</button>
+      <button class="tab-btn" onclick="filterCards('listening', this)">🎧 英語聽力 (2)</button>
+      <button class="tab-btn" onclick="filterCards('reading', this)">📖 英語閱讀 (2)</button>
+    </nav>
 
-      <!-- 第 1 份網頁 -->
-      <a href="page-01/" class="card">
+    <!-- 練習卡片列表 -->
+    <main class="grid" id="cardContainer">
+
+      <!-- 單元 1：聽力 -->
+      <a href="unit-01/" class="card" data-category="listening">
         <div>
-          <span class="card-tag">單元 01</span>
-          <h2 class="card-title">台南在地飲食文化</h2>
-          <p class="card-desc">探索在地食材與傳統小吃的故事，互動圖文專題。</p>
+          <div class="badge-wrap">
+            <span class="badge badge-listening">🎧 聽力練習</span>
+          </div>
+          <h2 class="card-title">Unit 1: Daily Routine</h2>
+          <p class="card-desc">聆聽日常生活作息對話，完成聽力理解測驗與單字填空。</p>
         </div>
-        <div class="card-action">前往瀏覽</div>
+        <div class="card-btn">進入聽力單元 →</div>
       </a>
 
-      <!-- 第 2 份網頁 -->
-      <a href="page-02/" class="card">
+      <!-- 單元 2：閱讀 -->
+      <a href="unit-02/" class="card" data-category="reading">
         <div>
-          <span class="card-tag">單元 02</span>
-          <h2 class="card-title">海洋永續與減塑探究</h2>
-          <p class="card-desc">觀察塑膠微粒對海洋環境的影響，線上學習任務單。</p>
+          <div class="badge-wrap">
+            <span class="badge badge-reading">📖 閱讀練習</span>
+          </div>
+          <h2 class="card-title">Unit 2: My Favorite Food</h2>
+          <p class="card-desc">閱讀簡短的飲食文化短文，找出關鍵訊息並回答問答題。</p>
         </div>
-        <div class="card-action">前往瀏覽</div>
+        <div class="card-btn">進入閱讀單元 →</div>
       </a>
 
-      <!-- 第 3 份網頁 -->
-      <a href="page-03/" class="card">
+      <!-- 單元 3：聽力 -->
+      <a href="unit-03/" class="card" data-category="listening">
         <div>
-          <span class="card-tag">單元 03</span>
-          <h2 class="card-title">綠色包裝設計展示</h2>
-          <p class="card-desc">結合環保理念與創意思維的學生專案成果呈現。</p>
+          <div class="badge-wrap">
+            <span class="badge badge-listening">🎧 聽力練習</span>
+          </div>
+          <h2 class="card-title">Unit 3: Weather & Seasons</h2>
+          <p class="card-desc">辨識不同天氣與季節的英文描述，加強發音辨析能力。</p>
         </div>
-        <div class="card-action">前往瀏覽</div>
+        <div class="card-btn">進入聽力單元 →</div>
       </a>
 
-      <!-- 未來有新網頁時，複製上方一整組 <a ...> 貼在下方即可 -->
+      <!-- 單元 4：閱讀 -->
+      <a href="unit-04/" class="card" data-category="reading">
+        <div>
+          <div class="badge-wrap">
+            <span class="badge badge-reading">📖 閱讀練習</span>
+          </div>
+          <h2 class="card-title">Unit 4: Animals in Nature</h2>
+          <p class="card-desc">探索自然界動植物的短篇科普閱讀，培養上下文理解力。</p>
+        </div>
+        <div class="card-btn">進入閱讀單元 →</div>
+      </a>
 
     </main>
   </div>
+
+  <script>
+    // 分頁切換過濾邏輯
+    function filterCards(category, element) {
+      // 切換按鈕 active 樣式
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      element.classList.add('active');
+
+      // 篩選卡片顯示
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
 
 </body>
 </html>
